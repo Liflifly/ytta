@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Nopi 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse:hover {
+            animation: pulse 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-purple-200 transition-colors duration-1000" id="body">
+    <audio autoplay loop class="hidden">
+        <source src="https://www.kozco.com/tech/piano2.wav" type="audio/wav">
+        Your browser doesn\'t support audio.
+    </audio>
+
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <h1 class="text-3xl md:text-4xl font-bold text-pink-600 text-center mb-6 animate-bounce">Hey Nopi Gyj 💖</h1>
+        <p class="text-lg md:text-xl text-gray-700 text-center mb-8 opacity-0" id="scroll-text">Scroll slow, got somethin' for ya.</p>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-8 opacity-0" id="message-card">
+            <p class="text-gray-800 text-base md:text-lg leading-relaxed">Yo Nop,</p>
+            <p class="text-gray-800 text-base md:text-lg leading-relaxed mt-4">
+                I know this is kinda sudden. We just got close not long ago, but I feel like we click every time we chat.
+            </p>
+            <p class="text-gray-800 text-base md:text-lg leading-relaxed mt-4">
+                So I just made this for fun, as a way to say...
+            </p>
+            <p class="text-pink-600 font-semibold text-lg md:text-xl mt-4">
+                I wanna be more than just chat buddies.
+            </p>
+            <p class="text-pink-600 font-semibold text-lg md:text-xl mt-4">
+                Wanna roll with me officially?
+            </p>
+            <p class="text-gray-800 text-right mt-6">— Parhan</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4 w-full justify-center">
+            <button id="yes-btn" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition-all pulse text-base md:text-lg">Heck yeah</button>
+            <button id="no-btn" class="bg-gray-300 text-gray-800 px-6 py-3 rounded-full hover:bg-gray-400 transition-all pulse text-base md:text-lg">Not ready yet</button>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll and fade-in animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('#scroll-text, #message-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+
+            // Dynamic background color transition
+            const colors = [
+                'from-pink-100 to-purple-200',
+                'from-purple-100 to-pink-200',
+                'from-blue-100 to-pink-200'
+            ];
+            let colorIndex = 0;
+            setInterval(() => {
+                colorIndex = (colorIndex + 1) % colors.length;
+                document.getElementById('body').className = `min-h-screen flex flex-col items-center justify-center bg-gradient-to-b ${colors[colorIndex]} transition-colors duration-1000`;
+            }, 5000);
+
+            // Button click handlers
+            document.getElementById('yes-btn').addEventListener('click', () => {
+                window.location.href = 'congrats.html';
+            });
+
+            document.getElementById('no-btn').addEventListener('click', () => {
+                alert('It\'s cool, Nop! 😅 I get it, maybe next time?');
+                document.getElementById('body').classList.add('bg-gradient-to-b', 'from-gray-200', 'to-blue-100');
+            });
+
+            // Prevent "No" button from being clicked easily
+            const noBtn = document.getElementById('no-btn');
+            noBtn.addEventListener('mouseover', () => {
+                const maxX = window.innerWidth - noBtn.offsetWidth;
+                const maxY = window.innerHeight - noBtn.offsetHeight;
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = Math.random() * maxX + 'px';
+                noBtn.style.top = Math.random() * maxY + 'px';
+            });
+        });
+    </script>
+</body>
+</html>
